@@ -1,72 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>CST Portal - Welcome</title>
-    <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .welcome-card { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); text-align: center; max-width: 450px; border-top: 6px solid #004a99; }
-        h1 { color: #004a99; margin-top: 0; }
-        p { color: #555; margin-bottom: 30px; font-size: 1.1em; }
-        
-        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 4px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.2s; }
-        .btn-upload { background: #004a99; color: white; }
-        .btn-new { background: #28a745; color: white; }
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-        
-        #fileInput { display: none; }
-    </style>
-</head>
-<body>
+:root {
+    --primary: #005a9c; /* Hydro Blue */
+    --bg: #f8f9fa;
+    --sidebar-bg: #1e293b;
+    --text: #334155;
+    --border: #e2e8f0;
+}
 
-<div class="welcome-card">
-    <h1>WELCOME SCREEN!!!l</h1>
-    <p>Have you previously filled this out and gotten a JSON?</p>
-    
-    <button class="btn btn-upload" onclick="document.getElementById('fileInput').click()">
-        I HAVE A JSON FILE TO UPLOAD
-    </button>
-    <input type="file" id="fileInput" accept=".json" onchange="handleFileUpload(event)">
+body {
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    margin: 0;
+    background-color: var(--bg);
+    color: var(--text);
+}
 
-    <div style="margin: 20px 0; font-weight: bold; color: #999; position: relative;">
-        <span style="background: white; padding: 0 10px;">OR</span>
-    </div>
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: var(--sidebar-bg);
+    color: white;
+    height: 100vh;
+    position: fixed;
+    padding: 20px;
+}
 
-    <button class="btn btn-new" onclick="startFresh()">
-        DON'T HAVE A SAVED FILE YET
-    </button>
-</div>
+.sidebar h2 { color: #38bdf8; font-size: 1.5rem; }
 
-<script>
-    function handleFileUpload(event) {
-        const file = event.target.files[0];
-        if (!file) return;
+.sidebar ul { list-style: none; padding: 0; margin-top: 40px; }
 
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                // 1. Validate it's actually JSON
-                const content = e.target.result;
-                JSON.parse(content); 
+.sidebar ul li { margin-bottom: 20px; }
 
-                // 2. "Hand-off": Save to localStorage so Master Page can see it
-                localStorage.setItem('cst_data_transfer', content);
+.sidebar ul li a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
 
-                // 3. Move to the Master Page
-                window.location.href = 'cst_master_application.html';
-            } catch (err) {
-                alert("Error: The file selected is not a valid JSON file.");
-            }
-        };
-        reader.readAsText(file);
-    }
+.sidebar ul li a:hover { color: white; }
 
-    function startFresh() {
-        // Ensure no old data is hanging around
-        localStorage.removeItem('cst_data_transfer');
-        window.location.href = 'cst_master_application.html';
-    }
-</script>
+/* Main Content */
+.content {
+    margin-left: 290px;
+    padding: 60px;
+    max-width: 900px;
+}
 
-</body>
-</html>
+h1 { font-size: 2.5rem; color: #0f172a; }
+
+.subtitle { color: #64748b; font-size: 1.2rem; }
+
+.notice {
+    background: #dbeafe;
+    padding: 15px;
+    border-left: 5px solid var(--primary);
+    margin: 20px 0;
+}
+
+/* Resource Cards */
+.resource-card, .procedure-box {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.btn-link {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.rationale {
+    font-size: 0.9rem;
+    color: #475569;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid var(--border);
+    text-align: left;
+}
+
+th { background: #f1f5f9; }
